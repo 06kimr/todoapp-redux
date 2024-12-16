@@ -1,14 +1,16 @@
+import { observer } from "mobx-react-lite";
 import { Todo } from "../types";
 import Checkbox from "./Checkbox";
 
 interface TodoListProps {
-  todos: Todo[]
+  todos: Todo[];
   onToggleTodo: (id: number) => void;
 }
 
-export default function TodoList({todos,onToggleTodo}:TodoListProps) {
-
-  
+const TodoList = observer(function TodoList({
+  todos,
+  onToggleTodo,
+}: TodoListProps) {
   return (
     <ul>
       {todos.map((todo) => (
@@ -23,4 +25,6 @@ export default function TodoList({todos,onToggleTodo}:TodoListProps) {
       ))}
     </ul>
   );
-}
+});
+
+export default TodoList;

@@ -1,35 +1,22 @@
-import { useState, useCallback } from "react";
-import { Todo } from "../types";
+import { useEffect } from "react";
+import { useStore } from "../context/StoreContext";
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
+import { observer } from "mobx-react-lite";
 
-export default function TodoContainer() {
-  const [todos, setTodos] = useState<Todo[]>([]);
+const TodoContainer = observer( function TodoContainer() {
+  const { todos, addTodo, toggleTodo, fetchTodos } = useStore();
 
-  const addTodo = useCallback((newTodo: string) => {
-    setTodos((prevTodos) => [
-      ...prevTodos,
-      { id: prevTodos.length + 1, text: newTodo, done: false },
-    ]);
-  }, []);
+  useEffect(() => {
+fetchTodos();
+  }, [fetchTodos])
 
-  const toggleTodo = (id: number) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            done: !todo.done,
-          };
-        }
-        return todo;
-      })
-    );
-  };
   return (
     <div>
       <TodoInput onAddTodo={addTodo} />
       <TodoList onToggleTodo={toggleTodo} todos={todos} />
     </div>
   );
-}
+})
+
+export default TodoContainer
