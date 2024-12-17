@@ -1,20 +1,13 @@
-import { Todo } from "../types";
+import { Todo } from "../types"
 
-export const getTodos = () => {
-  return new Promise<Todo[]>((resolve) => {
+export function getTodos(): Promise<Todo[]> {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      return resolve([
-        {
-          id: 1,
-          text: "Learn React",
-          done: true,
-        },
-        {
-          id: 2,
-          text: "Learn Redux",
-          done: false,
-        },
-      ]);
-    }, 1000);
-  });
-};
+      resolve([
+        {id: 1, text: 'a', done: false},
+        {id: 2, text: 'b', done: true},
+        {id: 3, text: 'c', done: false},
+      ])
+    }, 1000)
+  })
+}

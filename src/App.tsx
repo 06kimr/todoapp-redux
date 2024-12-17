@@ -1,17 +1,9 @@
-import { Provider } from "react-redux";
+import { RouterProvider } from "react-router-dom";
 import "./App.css";
-import Layout from "./components/Layout";
-import TodoContainer from "./components/TodoContainer";
-import store from "./store";
+import router from "./routes";
 
 function App() {
-  return (
-    <Provider store={store}>
-      <Layout>
-        <TodoContainer />
-      </Layout>
-    </Provider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
