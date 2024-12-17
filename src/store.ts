@@ -3,16 +3,19 @@ import todoReducer from "./slices/todoSlice";
 import { todoSaga } from "./sagas/todoSaga";
 import { all } from "redux-saga/effects";
 import createSagaMiddleware from "redux-saga";
+import { commonSaga } from "./sagas/commonSaga";
+import commonReducer from "./slices/commonSlice";
 
 const sagaMiddleware = createSagaMiddleware();
 
 function createStore() {
   function* rootSaga() {
-    yield all([todoSaga()]);
+    yield all([todoSaga(), commonSaga()]);
   }
   const store = configureStore({
     reducer: {
       todo: todoReducer,
+      common: commonReducer
     },
     middleware: getDefaultMiddleware => getDefaultMiddleware().concat(sagaMiddleware)
   });

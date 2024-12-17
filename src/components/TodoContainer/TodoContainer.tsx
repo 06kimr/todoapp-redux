@@ -1,28 +1,58 @@
-
 import { useEffect } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import TodoInput from "../TodoInput";
-import './todoContainer.css'
-import { useDispatch } from "react-redux";
+import "./todoContainer.css";
 import { addTodo, fetchTodoRequest } from "../../slices/todoSlice";
+import { useDispatch } from "../../hooks/useRedux";
 
 export default function TodoContainer() {
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchTodoRequest())
+    dispatch(fetchTodoRequest());
   }, [dispatch]);
   return (
     <div>
-      <TodoInput onAddTodo={(todo: string) => dispatch(addTodo({todo}))} />
+      <TodoInput onAddTodo={(todo: string) => dispatch(addTodo({ todo }))} />
       <div>
-        <NavLink className={({isActive}) => `todo-container__link ${isActive && "todo-container__link--active"}`} to="/">all</NavLink>
-        <NavLink className={({isActive}) => `todo-container__link ${isActive && "todo-container__link--active"}`} to="/active">active</NavLink>
-        <NavLink className={({isActive}) => `todo-container__link ${isActive && "todo-container__link--active"}`} to="/completed">completed</NavLink>
-
+        <NavLink
+          className={({ isActive }) =>
+            `todo-container__link ${isActive && "todo-container__link--active"}`
+          }
+          to="/"
+          replace
+          state={{
+            filter: 'all'
+          }}
+        >
+          all
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            `todo-container__link ${isActive && "todo-container__link--active"}`
+          }
+          to="/"
+          replace
+          state={{
+            filter: 'active'
+          }}
+        >
+          active
+        </NavLink>
+        <NavLink
+          className={({ isActive }) =>
+            `todo-container__link ${isActive && "todo-container__link--active"}`
+          }
+          to="/"
+          replace
+          state={{
+            filter: 'completed'
+          }}
+        >
+          completed
+        </NavLink>
       </div>
       <Outlet />
-    
     </div>
   );
 }

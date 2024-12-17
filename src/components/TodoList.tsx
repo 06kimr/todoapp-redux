@@ -1,19 +1,18 @@
-
-import { useDispatch } from "react-redux";
-import { useSelector } from "../hooks/useRedux";
+import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "../hooks/useRedux";
+import { toggleTodo } from "../slices/todoSlice";
 import { Todo } from "../types";
 import Checkbox from "./Checkbox";
-import { toggleTodo } from "../slices/todoSlice";
 
-interface TodoListProps {
-  filter?: "all"| "active" | "completed"
-}
-
-export default function TodoList({filter}: TodoListProps) {
-  const todos = useSelector(state => state.todo.todos)
+export default function TodoList() {
+  const location = useLocation();
+  const filter = location.state?.filter ?? "all";
+  const filteredTodos = useSelector((state) => {
+    const filteredTodos = filterTodos(state.todo.todos, filter);
+    return filteredTodos;
+  });
   const dispatch = useDispatch();
 
-  const filteredTodos = filterTodos(todos, filter)
   return (
     <ul>
       {filteredTodos.map((todo) => (
@@ -22,7 +21,7 @@ export default function TodoList({filter}: TodoListProps) {
             id={`todo-${todo.id}`}
             checked={todo.done}
             label={todo.text}
-            onChange={() => dispatch(toggleTodo({id: todo.id}))}
+            onChange={() => dispatch(toggleTodo({ id: todo.id }))}
           />
         </li>
       ))}
@@ -30,7 +29,10 @@ export default function TodoList({filter}: TodoListProps) {
   );
 }
 
-function filterTodos(todos: Todo[], filter?: "all"| "active" | "completed") {
+function filterTodos(todos: Todo[], filter: "all" | "active" | "completed") {
+  if (todos.length === 0) {
+    return todos;
+  }
   if (filter === "active") {
     return todos.filter((todo) => !todo.done);
   } else if (filter === "completed") {

@@ -1,25 +1,24 @@
 import { FormEvent } from "react";
-import { login } from "../services/userApi";
-import { useSetAtom } from "jotai";
-import { userAtom } from "../store";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
 
-  const setUser = useSetAtom(userAtom);
+import { useDispatch } from "../hooks/useRedux";
+import { login } from "../slices/commonSlice";
+
+export default function Login() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const username = e.currentTarget.username.value;
     const password = e.currentTarget.password.value;
 
-try{
-  const user = await login(username, password);
-  setUser(user);
-  navigate('/')
-}catch{
-  alert("Invalud username or password")
-}
+    try {
+      dispatch(login({ username, password }));
+      navigate("/");
+    } catch {
+      alert("Invalud username or password");
+    }
   };
   return (
     <form onSubmit={handleSubmit}>

@@ -1,10 +1,9 @@
 import { Link, Outlet } from "react-router-dom";
 import "./layout.css";
-import { userAtom } from "../../store";
-import { useAtomValue } from "jotai";
+import { useSelector } from "../../hooks/useRedux";
 
 export default function Layout() {
-  const user = useAtomValue(userAtom);
+  const user = useSelector((state) => state.common.user);
   return (
     <div className="layout__container">
       <div className="layout__gnb">
