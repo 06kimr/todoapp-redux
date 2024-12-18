@@ -1,4 +1,3 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 interface TodoInputProps {
@@ -12,26 +11,10 @@ export default function TodoInput({ onAddTodo }: TodoInputProps) {
     console.log("onAddTodo changed~!");
   }, [onAddTodo]);
 
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation({
-    mutationFn: (text: string) => {
-      return new Promise<string>(resolve => {
-        setTimeout(() => {
-          resolve(text);
-        }, 1000)
-      })
-
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['todos']
-      })
-    },
-    onError: () => {
-
-    }
-  })
+  const addTodo = () => {
+    onAddTodo(newTodo);
+    setNewTodo("");
+  };
 
   return (
     <div>
@@ -40,7 +23,7 @@ export default function TodoInput({ onAddTodo }: TodoInputProps) {
         value={newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
       />
-      <button onClick={() => mutation.mutate(newTodo)}>추가</button>
+      <button onClick={addTodo}>추가</button>
     </div>
   );
 }

@@ -24,7 +24,7 @@ export default function Login() {
     <form onSubmit={handleSubmit}>
       <div>
         <div>
-          <label htmlFor="password">username</label>
+          <label htmlFor="username">username</label>
           <input type="text" id="username" name="username" />
         </div>
         <div>
