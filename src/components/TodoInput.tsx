@@ -12,11 +12,6 @@ export default function TodoInput({ onAddTodo }: TodoInputProps) {
     console.log("onAddTodo changed~!");
   }, [onAddTodo]);
 
-  const addTodo = () => {
-    onAddTodo(newTodo);
-    setNewTodo("");
-  };
-
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
