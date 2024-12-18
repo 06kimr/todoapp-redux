@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.5.0",
     "@tanstack/react-query": "^5.62.8",
     "@tanstack/react-table": "^8.20.6",
+    "gsap": "^3.12.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-redux": "^9.2.0",

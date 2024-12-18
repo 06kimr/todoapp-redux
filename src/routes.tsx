@@ -5,6 +5,7 @@ import Login from "./components/Login";
 import { useSelector } from "./hooks/useRedux";
 import TodoListWithQuery from "./components/TodoListWithQuery";
 import ProductTable from "./components/ProductTable";
+import AnimationWrapper from "./components/AnimationWrapper";
 
 const LazyTodoContainer = lazy(
   () => import("./components/TodoContainer/TodoContainer")
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '/animation',
+    element: <AnimationWrapper />
+  }
 ]);
 
 export default router;
