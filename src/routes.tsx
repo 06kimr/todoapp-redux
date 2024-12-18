@@ -4,6 +4,7 @@ import Layout from "./components/Layout/Layout";
 import Login from "./components/Login";
 import { useSelector } from "./hooks/useRedux";
 import TodoListWithQuery from "./components/TodoListWithQuery";
+import ProductTable from "./components/ProductTable";
 
 const LazyTodoContainer = lazy(
   () => import("./components/TodoContainer/TodoContainer")
@@ -78,6 +79,12 @@ const router = createBrowserRouter([
             element: <TodoListWithQuery />,
           },
         ],
+      },
+      {
+        path: "/products",
+        element: (
+      <ProductTable />
+        ),
       },
     ],
   },
