@@ -1,9 +1,9 @@
-
 import { lazy, PropsWithChildren, Suspense } from "react";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Login from "./components/Login";
 import { useSelector } from "./hooks/useRedux";
+import TodoListWithQuery from "./components/TodoListWithQuery";
 
 const LazyTodoContainer = lazy(
   () => import("./components/TodoContainer/TodoContainer")
@@ -11,7 +11,7 @@ const LazyTodoContainer = lazy(
 const LazyTodoList = lazy(() => import("./components/TodoList"));
 
 const ProtectedRoute = ({ children }: PropsWithChildren) => {
-  const user = useSelector(state => state.common.user)
+  const user = useSelector((state) => state.common.user);
   if (!user) {
     return <Navigate to="/login" replace />;
   }
@@ -63,6 +63,21 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/with-query",
+        lazy: async () => {
+          const { default: TodoContainer } = await import(
+            "./components/TodoContainer/TodoContainerWithQuery"
+          );
+          return { Component: TodoContainer };
+        },
+        children: [
+          {
+            index: true,
+            element: <TodoListWithQuery />,
+          },
+        ],
       },
     ],
   },
